@@ -1,0 +1,17 @@
+#load tidyr
+data1=data.frame(dates=c("jan/2/2034","dec/01/2005","march/2/2015","apr/8/2019"))
+View(data1)
+
+sep_data=separate(data1,col=dates,into=c("month","day","year"),sep="/")
+View(sep_data)                 
+write_data=unite(sep_data,col=new_dates,c("month","day","year"),sep=".")
+View(write_data)
+
+data2=data.frame(first_name=c("John","Jame","Doe"),last_name=c("Doe","Smith","Johnson"))
+
+data2=unite(data2,col=full_name,sep="-")
+View(data2)
+
+data3=data.frame(dates=c("22/01/2030","06/09/2005","12/06/2003"))
+sep_data3=separate(data3,col=dates,into=c("day","month","year"),sep="/")
+View(sep_data3)

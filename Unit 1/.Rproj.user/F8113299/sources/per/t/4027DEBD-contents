@@ -1,0 +1,10 @@
+D1=Sample_Data_dogs_dataset
+ncol(D1)
+nrow(D1)
+dim(D1)
+head(D1)
+head(D1,100)
+tail(D1,10)
+D2=D1
+D2=D1$conc
+max(D2)
