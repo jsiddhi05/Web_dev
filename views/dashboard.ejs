@@ -1,0 +1,76 @@
+<%- include('partials/header') %>
+
+<section class="page-hero page-hero-short">
+  <div class="page-hero-bg" style="background-image: url('https://images.unsplash.com/photo-1488085061387-422e29b40080?w=1400')"></div>
+  <div class="page-hero-content">
+    <h1>Welcome, <%= user.name.split(' ')[0] %>!</h1>
+    <p>Manage your bookings and explore new destinations</p>
+  </div>
+</section>
+
+<section class="section dashboard-section">
+  <div class="container">
+    <div class="dashboard-grid">
+
+      <aside class="dashboard-sidebar">
+        <div class="user-profile-card">
+          <div class="user-avatar"><%= user.name.charAt(0).toUpperCase() %></div>
+          <h3><%= user.name %></h3>
+          <p><%= user.email %></p>
+          <span class="member-badge">✈ Member</span>
+        </div>
+        <nav class="dash-nav">
+          <a href="/dashboard" class="dash-link active"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+          <a href="/tours/user/bookings" class="dash-link"><i class="fas fa-suitcase"></i> My Bookings</a>
+          <a href="/tours" class="dash-link"><i class="fas fa-globe"></i> Browse Tours</a>
+          <a href="/auth/logout" class="dash-link logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        </nav>
+      </aside>
+
+      <main class="dashboard-main">
+        <div class="dash-cards">
+          <div class="dash-stat-card">
+            <div class="dash-stat-icon" style="background:#fff3e0"><i class="fas fa-suitcase" style="color:#f5a623"></i></div>
+            <div><h3>My Bookings</h3><p>View all your trips</p></div>
+            <a href="/tours/user/bookings" class="btn btn-sm btn-primary">View</a>
+          </div>
+          <div class="dash-stat-card">
+            <div class="dash-stat-icon" style="background:#e8f5e9"><i class="fas fa-globe" style="color:#43a047"></i></div>
+            <div><h3>Explore Tours</h3><p>50+ destinations</p></div>
+            <a href="/tours" class="btn btn-sm btn-primary">Browse</a>
+          </div>
+          <div class="dash-stat-card">
+            <div class="dash-stat-icon" style="background:#e3f2fd"><i class="fas fa-headset" style="color:#1e88e5"></i></div>
+            <div><h3>Support</h3><p>24/7 assistance</p></div>
+            <a href="/about" class="btn btn-sm btn-primary">Contact</a>
+          </div>
+        </div>
+
+        <div class="dash-featured">
+          <h2>Recommended For You</h2>
+          <div class="dash-tours-row">
+            <div class="dash-tour-card">
+              <div class="dash-tour-img" style="background-image:url('https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=600')"></div>
+              <div class="dash-tour-info">
+                <h4>Bali Paradise Escape</h4>
+                <p><i class="fas fa-map-marker-alt"></i> Indonesia &nbsp;|&nbsp; <i class="fas fa-clock"></i> 7 Days</p>
+                <span class="price-tag">From $1,299</span>
+              </div>
+            </div>
+            <div class="dash-tour-card">
+              <div class="dash-tour-img" style="background-image:url('https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=600')"></div>
+              <div class="dash-tour-info">
+                <h4>Santorini Sunset Cruise</h4>
+                <p><i class="fas fa-map-marker-alt"></i> Greece &nbsp;|&nbsp; <i class="fas fa-clock"></i> 5 Days</p>
+                <span class="price-tag">From $1,899</span>
+              </div>
+            </div>
+          </div>
+          <a href="/tours" class="btn btn-outline-dark" style="margin-top:20px">Browse All Tours</a>
+        </div>
+      </main>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

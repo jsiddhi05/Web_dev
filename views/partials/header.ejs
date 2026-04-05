@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-container">
+    <a href="/" class="nav-logo">
+      <div class="logo-box">
+        <span>travel</span>
+      </div>
+      <span class="brand-name">Travel World</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="/" class="<%= typeof title !== 'undefined' && title.includes('Travel World -') ? 'active' : '' %>">Home</a></li>
+      <li><a href="/about" class="<%= typeof title !== 'undefined' && title.includes('About') ? 'active' : '' %>">About</a></li>
+      <li><a href="/tours" class="<%= typeof title !== 'undefined' && title.includes('Tours') ? 'active' : '' %>">Tour</a></li>
+      <% if (user) { %>
+        <li><a href="/dashboard">Dashboard</a></li>
+      <% } %>
+    </ul>
+    <div class="nav-auth">
+      <% if (user) { %>
+        <span class="nav-user">Hi, <%= user.name.split(' ')[0] %></span>
+        <a href="/auth/logout" class="btn btn-dark">Logout</a>
+      <% } else { %>
+        <a href="/auth/login" class="btn btn-outline">Login</a>
+        <a href="/auth/register" class="btn btn-dark">Register</a>
+      <% } %>
+    </div>
+    <button class="hamburger" id="hamburger"><i class="fas fa-bars"></i></button>
+  </div>
+</nav>
+
+<% if (success_msg && success_msg.length > 0) { %>
+  <div class="alert alert-success"><i class="fas fa-check-circle"></i> <%= success_msg %></div>
+<% } %>
+<% if (error_msg && error_msg.length > 0) { %>
+  <div class="alert alert-danger"><i class="fas fa-exclamation-circle"></i> <%= error_msg %></div>
+<% } %>

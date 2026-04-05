@@ -1,0 +1,96 @@
+<%- include('partials/header') %>
+
+<section class="tour-detail-hero" style="background-image: url('<%= tour.image %>')">
+  <div class="tour-detail-overlay"></div>
+  <div class="tour-detail-hero-content">
+    <span class="tour-category"><%= tour.category %></span>
+    <h1><%= tour.name %></h1>
+    <div class="tour-meta-row">
+      <span><i class="fas fa-map-marker-alt"></i> <%= tour.destination %></span>
+      <span><i class="fas fa-clock"></i> <%= tour.duration %></span>
+      <span><i class="fas fa-star"></i> <%= tour.rating %> (<%= tour.reviews %> reviews)</span>
+    </div>
+  </div>
+</section>
+
+<section class="section tour-detail-content">
+  <div class="container">
+    <div class="tour-detail-grid">
+      <div class="tour-detail-main">
+        <div class="detail-card">
+          <h2>About This Tour</h2>
+          <p><%= tour.description %></p>
+        </div>
+        <% if (tour.highlights && tour.highlights.length > 0) { %>
+        <div class="detail-card">
+          <h2>Highlights</h2>
+          <ul class="highlights-list">
+            <% tour.highlights.forEach(h => { %><li><i class="fas fa-check-circle"></i> <%= h %></li><% }) %>
+          </ul>
+        </div>
+        <% } %>
+        <% if (tour.included && tour.included.length > 0) { %>
+        <div class="detail-card">
+          <h2>What's Included</h2>
+          <ul class="included-list">
+            <% tour.included.forEach(item => { %><li><i class="fas fa-check"></i> <%= item %></li><% }) %>
+          </ul>
+        </div>
+        <% } %>
+      </div>
+
+      <div class="tour-detail-sidebar">
+        <div class="booking-card">
+          <div class="booking-price">
+            <span class="from">From</span>
+            <span class="price">$<%= tour.price.toLocaleString() %></span>
+            <span class="per">per person</span>
+          </div>
+          <% if (user) { %>
+          <form action="/tours/<%= tour._id %>/book" method="POST" class="booking-form">
+            <div class="form-group">
+              <label>Travel Date</label>
+              <input type="date" name="travelDate" class="form-input" required min="<%= new Date().toISOString().split('T')[0] %>" />
+            </div>
+            <div class="form-group">
+              <label>Number of Travelers</label>
+              <select name="travelers" class="form-input">
+                <% for(let i=1;i<=10;i++) { %><option value="<%= i %>"><%= i %> Traveler<%= i>1?'s':'' %></option><% } %>
+              </select>
+            </div>
+            <div class="price-calc">
+              <span>Total Price:</span>
+              <span id="totalPrice">$<%= tour.price.toLocaleString() %></span>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Book Now</button>
+          </form>
+          <% } else { %>
+          <div class="login-prompt">
+            <p>Please log in to book this tour</p>
+            <a href="/auth/login" class="btn btn-primary btn-block">Login to Book</a>
+            <a href="/auth/register" class="btn btn-outline btn-block" style="margin-top:10px">Create Account</a>
+          </div>
+          <% } %>
+        </div>
+        <div class="sidebar-info">
+          <div class="info-item"><i class="fas fa-shield-alt"></i><span>Free cancellation up to 48hrs</span></div>
+          <div class="info-item"><i class="fas fa-headset"></i><span>24/7 customer support</span></div>
+          <div class="info-item"><i class="fas fa-medal"></i><span>Best price guarantee</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const price = <%= tour.price %>;
+  const sel = document.querySelector('select[name="travelers"]');
+  const total = document.getElementById('totalPrice');
+  if (sel && total) {
+    sel.addEventListener('change', () => {
+      total.textContent = '$' + (price * parseInt(sel.value)).toLocaleString();
+    });
+  }
+</script>
+
+<%- include('partials/footer') %>

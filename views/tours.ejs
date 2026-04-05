@@ -1,0 +1,80 @@
+<%- include('partials/header') %>
+
+<section class="page-hero">
+  <div class="page-hero-bg" style="background-image: url('https://images.unsplash.com/photo-1488085061387-422e29b40080?w=1400')"></div>
+  <div class="page-hero-content">
+    <h1>Explore Our Tours</h1>
+    <p>Find the perfect adventure tailored to your travel style</p>
+  </div>
+</section>
+
+<section class="section tours-page">
+  <div class="container">
+    <!-- Filter Bar -->
+    <div class="filter-bar">
+      <form action="/tours" method="GET" class="filter-form">
+        <div class="filter-search">
+          <i class="fas fa-search"></i>
+          <input type="text" name="search" placeholder="Search destinations..." value="<%= search %>" />
+        </div>
+        <div class="filter-categories">
+          <% categories.forEach(cat => { %>
+            <button type="submit" name="category" value="<%= cat %>"
+              class="filter-btn <%= selectedCategory === cat ? 'active' : '' %>">
+              <%= cat %>
+            </button>
+          <% }) %>
+        </div>
+      </form>
+    </div>
+
+    <!-- Results count -->
+    <div class="results-info">
+      <p>Showing <strong><%= tours.length %></strong> tours
+        <% if (selectedCategory !== 'All') { %> in <strong><%= selectedCategory %></strong><% } %>
+        <% if (search) { %> matching "<strong><%= search %></strong>"<% } %>
+      </p>
+    </div>
+
+    <!-- Tours Grid -->
+    <% if (tours.length > 0) { %>
+      <div class="tours-grid">
+        <% tours.forEach(tour => { %>
+          <div class="tour-card">
+            <div class="tour-img" style="background-image: url('<%= tour.image %>')">
+              <span class="tour-category"><%= tour.category %></span>
+              <div class="tour-overlay"></div>
+            </div>
+            <div class="tour-body">
+              <div class="tour-rating">
+                <i class="fas fa-star"></i>
+                <span><%= tour.rating %></span>
+                <span class="reviews">(<%= tour.reviews %> reviews)</span>
+              </div>
+              <h3 class="tour-name"><%= tour.name %></h3>
+              <p class="tour-dest"><i class="fas fa-map-marker-alt"></i> <%= tour.destination %></p>
+              <p class="tour-duration"><i class="fas fa-clock"></i> <%= tour.duration %></p>
+              <p class="tour-desc"><%= tour.description.substring(0, 90) %>...</p>
+              <div class="tour-footer">
+                <div class="tour-price">
+                  <span class="price-label">From</span>
+                  <span class="price-value">$<%= tour.price.toLocaleString() %></span>
+                </div>
+                <a href="/tours/<%= tour._id %>" class="btn btn-sm btn-primary">View Tour</a>
+              </div>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+    <% } else { %>
+      <div class="no-results">
+        <i class="fas fa-search fa-3x"></i>
+        <h3>No tours found</h3>
+        <p>Try adjusting your filters or search term</p>
+        <a href="/tours" class="btn btn-primary">View All Tours</a>
+      </div>
+    <% } %>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

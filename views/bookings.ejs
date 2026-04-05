@@ -1,0 +1,63 @@
+<%- include('partials/header') %>
+
+<section class="page-hero page-hero-short">
+  <div class="page-hero-bg" style="background-image: url('https://images.unsplash.com/photo-1488085061387-422e29b40080?w=1400')"></div>
+  <div class="page-hero-content">
+    <h1>My Bookings</h1>
+    <p>All your confirmed travel plans in one place</p>
+  </div>
+</section>
+
+<section class="section bookings-section">
+  <div class="container">
+    <div class="dashboard-grid">
+      <aside class="dashboard-sidebar">
+        <div class="user-profile-card">
+          <div class="user-avatar"><%= user.name.charAt(0).toUpperCase() %></div>
+          <h3><%= user.name %></h3>
+          <p><%= user.email %></p>
+          <span class="member-badge">✈ Member</span>
+        </div>
+        <nav class="dash-nav">
+          <a href="/dashboard" class="dash-link"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+          <a href="/tours/user/bookings" class="dash-link active"><i class="fas fa-suitcase"></i> My Bookings</a>
+          <a href="/tours" class="dash-link"><i class="fas fa-globe"></i> Browse Tours</a>
+          <a href="/auth/logout" class="dash-link logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        </nav>
+      </aside>
+
+      <main class="dashboard-main">
+        <h2 style="margin-bottom:24px">Your Trips (<%= bookings.length %>)</h2>
+        <% if (bookings.length > 0) { %>
+          <div class="bookings-list">
+            <% bookings.forEach(b => { %>
+              <div class="booking-item">
+                <div class="booking-img" style="background-image:url('<%= b.tour.image %>')"></div>
+                <div class="booking-details">
+                  <h3><%= b.tour.name %></h3>
+                  <p><i class="fas fa-map-marker-alt"></i> <%= b.tour.destination %></p>
+                  <p><i class="fas fa-calendar-alt"></i> <%= new Date(b.travelDate).toDateString() %></p>
+                  <p><i class="fas fa-users"></i> <%= b.travelers %> Traveler<%= b.travelers > 1 ? 's' : '' %></p>
+                </div>
+                <div class="booking-meta">
+                  <span class="booking-status status-<%= b.status %>"><%= b.status %></span>
+                  <div class="booking-total">$<%= b.totalPrice.toLocaleString() %></div>
+                  <a href="/tours/<%= b.tour._id %>" class="btn btn-sm btn-outline-dark">View Tour</a>
+                </div>
+              </div>
+            <% }) %>
+          </div>
+        <% } else { %>
+          <div class="no-results">
+            <i class="fas fa-suitcase fa-3x"></i>
+            <h3>No bookings yet</h3>
+            <p>Start exploring and book your first adventure!</p>
+            <a href="/tours" class="btn btn-primary">Browse Tours</a>
+          </div>
+        <% } %>
+      </main>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>
